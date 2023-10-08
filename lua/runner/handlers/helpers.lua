@@ -23,6 +23,7 @@ local M = {}
 ---
 --- @param command string The shell command to run when the handler called
 --- @param editable boolean? Whether the user should be prompted to edit the command using `vim.input()` before running it. Useful when giving command line arguments to a script. *Defaults to false*
+INIT_FLAG = false
 M.shell_handler = function(command, editable)
   if editable == nil then
     editable = false
@@ -38,13 +39,33 @@ M.shell_handler = function(command, editable)
     local output_buffer = utils.create_buffer()
 
     local output_window = utils.create_window()
+
+    vim.api.nvim_buf_set_option(output_buffer, "filetype", "terminal")
+    vim.api.nvim_buf_set_option(0, 'modifiable', true)
+    -- vim.api.nvim_buf_set_option(output_buffer, "buflisted", false)
     vim.api.nvim_win_set_buf(output_window, output_buffer)
 
-    utils._last_command = command
+    local job_id = vim.fn.termopen(vim.o.shell)
+    -- local id = #terminals.list + 1
+    -- local term = { win = output_window, buf = output_buffer, open = true, type = type, job_id = job_id }
+    -- terminals.list[id] = term
+    vim.cmd "startinsert"
 
-    vim.fn.termopen(command, {
-      cwd = vim.fn.getcwd(),
-    })
+    -- vim.api.nvim_win_set_buf(output_window, output_buffer)
+    local cmd = "terminal "..command
+    vim.cmd (cmd)
+    -- vim.nvim_set_current_win(output_window)
+
+    utils._last_command = command
+    -- vim.fn.termopen("pwd")
+    -- if not INIT_FLAG then
+    --   vim.fn.termopen(command, {
+    --     cwd = vim.fn.getcwd(),
+    --   })
+    --   INIT_FLAG = true
+    -- else
+    -- end
+
   end
 end
 

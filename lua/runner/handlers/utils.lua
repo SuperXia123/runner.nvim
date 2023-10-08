@@ -9,7 +9,8 @@ M._last_handler = nil
 
 M.create_buffer = function()
   if M._terminal_buffer then
-    vim.api.nvim_buf_delete(M._terminal_buffer, {})
+    return M._terminal_buffer
+    -- vim.api.nvim_buf_delete(M._terminal_buffer, {})
   end
 
   local buffer = vim.api.nvim_create_buf(true, true)
