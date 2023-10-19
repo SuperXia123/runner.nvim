@@ -14,7 +14,7 @@ M.create_buffer = function()
   end
 
   local buffer = vim.api.nvim_create_buf(true, true)
-  vim.api.nvim_buf_set_option(buffer, 'modifiable', false)
+  vim.api.nvim_buf_set_option(buffer, 'modifiable', true)
 
   M._terminal_buffer = buffer
   return buffer
