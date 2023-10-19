@@ -37,12 +37,11 @@ M.shell_handler = function(command, editable)
     end
 
     local output_buffer = utils.create_buffer()
+    vim.api.nvim_buf_set_option(output_buffer, "filetype", "terminal")
+    vim.api.nvim_buf_set_option(output_buffer, 'modifiable', true)
+    -- vim.api.nvim_buf_set_option(output_buffer, "buflisted", false)
 
     local output_window = utils.create_window()
-
-    vim.api.nvim_buf_set_option(output_buffer, "filetype", "terminal")
-    vim.api.nvim_buf_set_option(0, 'modifiable', true)
-    -- vim.api.nvim_buf_set_option(output_buffer, "buflisted", false)
     vim.api.nvim_win_set_buf(output_window, output_buffer)
 
     local job_id = vim.fn.termopen(vim.o.shell)
