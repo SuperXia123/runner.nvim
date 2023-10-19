@@ -52,7 +52,7 @@ M.shell_handler = function(command, editable)
 
     -- vim.api.nvim_win_set_buf(output_window, output_buffer)
     local cmd = "terminal "..command
-    vim.cmd (cmd)
+    -- vim.cmd (cmd)
     -- vim.nvim_set_current_win(output_window)
 
     utils._last_command = command
